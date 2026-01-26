@@ -1,0 +1,28 @@
+[workspace]
+resolver = "3"
+members = ["client-service", "common"]
+
+[workspace.dependencies]
+thiserror = { version = "2" }
+eyre = { version = "0.6" }
+axum = "0.8"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.48", features = ["full"] }
+dotenvy = { version = "0.15" }
+lapin = { version = "3.7" }
+
+[profile.dev]
+incremental = true # Only recompile what changed, instead of the whole project.
+#rustflags = ["-Zthreads=8"] # Better compile performance.
+
+[profile.release]
+codegen-units = 256 # Parallel compilation, slightly reduces final optimization.
+lto = true          # Enable link-time-optimizations.
+opt-level = 3       # Speed is preferred.
+panic = "abort"     # No unwind, reduces binary size and runtime overhead.
+strip = "symbols"   # Remove debug symbols.
+#trim-paths = "all"  # Remove potentially privileged information from the binaries
+#rustflags = ["-Cdebuginfo=0", "-Zthreads=8"] # Better compile performance

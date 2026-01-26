@@ -1,0 +1,30 @@
+{
+    "svelte.enable-ts-plugin": true,
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    },
+    "rust-analyzer.linkedProjects": [
+        "services/backend/Cargo.toml"
+    ],
+    // Keep RA off file-watch events from VSCode, reduces CPU spikes
+    "rust-analyzer.files.watcher": "server",
+    // faster indexing
+    "rust-analyzer.files.exclude": [
+        "**/.git/**",
+        "**/target/**",
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/out/**"
+    ],
+    // Give RA its own dir, prevents cache conflicts between cli cargo build and RA background analysis
+    "rust-analyzer.cargo.targetDir": "target/ra",
+    // We want all lib/bin/tests/examples/benches targets watched
+    "rust-analyzer.cargo.allTargets": true,
+    "rust-analyzer.check.allTargets": true,
+    // Clippy instead of cargo check
+    "rust-analyzer.check.command": "clippy",
+    // RA builds with all cargo features, careful with mutually exclusive features and no_std!
+    "rust-analyzer.cargo.features": "all",
+    // no popup for files that are not included in mod.rs/lib.rs, we know what we are doing
+    "rust-analyzer.showUnlinkedFileNotification": false
+}

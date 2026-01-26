@@ -1,0 +1,9 @@
+[build]
+rustc-wrapper = "sccache" # caching compiler wrapper that speeds up rebuilds by caching previous compilation outputs.
+
+[target.aarch64-apple-darwin]
+# this is still unstable, even on nightly
+#rustflags = ["-C", "target-cpu=native"] # Optimize the binary for the host CPU, enabling all CPU-specific instructions.
+
+[alias]
+client-dev = "run -p client-service --features dev-env"

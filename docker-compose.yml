@@ -1,0 +1,7 @@
+include:
+  - services/backend/client-service/docker-compose.yml
+  - rabbitmq/docker-compose.yml
+
+networks:
+  shared-network:
+    driver: bridge

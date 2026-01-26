@@ -1,0 +1,17 @@
+# Some of these are only available on the unstable branch
+unstable_features = true
+
+# Edition
+edition = "2024"
+
+# Imports
+group_imports = "StdExternalCrate"
+imports_granularity = "Crate"
+imports_layout = "HorizontalVertical"
+
+# Empty lines
+blank_lines_upper_bound = 2
+
+# Comments
+comment_width = 100
+format_code_in_doc_comments = true
