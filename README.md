@@ -1,4 +1,7 @@
-# Overengineered Architecture
+# Overengineering as a service.
+
+This whole repository is a whole bunch of overengineered nothing, a playground for exploring patterns, best practices,
+and gists to be applied somewhere else, and overall just ceremonial code meditation.
 
 ## Quick Start
 
