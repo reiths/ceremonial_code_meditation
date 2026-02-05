@@ -10,7 +10,7 @@ use lapin::{
     types::FieldTable,
 };
 use tokio::sync::RwLock;
-use tracing::{error, info, trace};
+use tracing::{debug, error, trace};
 
 
 const EVENTS_EXCHANGE: &str = "events";
@@ -32,10 +32,10 @@ impl RabbitMQ {
 
     pub async fn connect(&self, url: &str) -> Result<(), lapin::Error> {
         let connection = Connection::connect(url, ConnectionProperties::default()).await?;
-        info!("RabbitMQ connection established.");
+        debug!("RabbitMQ connection established.");
 
         let channel = connection.create_channel().await?;
-        info!("RabbitMQ channel created.");
+        debug!("RabbitMQ channel created.");
 
         channel
             .exchange_declare(
@@ -49,7 +49,7 @@ impl RabbitMQ {
             )
             .await?;
 
-        info!("Exchange '{EVENTS_EXCHANGE}' declared.");
+        debug!("Exchange '{EVENTS_EXCHANGE}' declared.");
 
         *self.connection.write().await = Some(connection);
         *self.channel.write().await = Some(channel);
@@ -89,7 +89,7 @@ impl RabbitMQ {
             )
             .await?;
 
-        info!("Queue '{queue_name}' declared with routing key '{routing_key}'");
+        debug!("Queue '{queue_name}' declared with routing key '{routing_key}'");
 
         Ok(())
     }
@@ -108,7 +108,7 @@ impl RabbitMQ {
                 BasicPublishOptions::default(),
                 message,
                 BasicProperties::default()
-                    .with_content_type("application/json".into()) // tell the consumers this is a json event
+                    .with_content_type("application/json".into()) // tells consumers this is json. Later maybe protobuf?
                     .with_delivery_mode(2) // persistant
                     .with_timestamp(chrono::Utc::now().timestamp() as u64),
             )
