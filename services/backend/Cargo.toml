@@ -2,6 +2,11 @@
 resolver = "3"
 members = ["client-service", "common"]
 
+[workspace.package]
+edition = "2024"
+rust-version = "1.93"
+publish = false
+
 [workspace.dependencies]
 thiserror = { version = "2" }
 eyre = { version = "0.6" }
@@ -16,15 +21,16 @@ lapin = { version = "3.7" }
 chrono = { version = "0.4" }
 mongodb = { version = "3.5" }
 
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
 [profile.dev]
+opt-level = 0 # Prefer fast dev builds over speed.
 incremental = true # Only recompile what changed, instead of the whole project.
-#rustflags = ["-Zthreads=8"] # Better compile performance.
 
 [profile.release]
-codegen-units = 256 # Parallel compilation, slightly reduces final optimization.
-lto = true          # Enable link-time-optimizations.
-opt-level = 3       # Speed is preferred.
-panic = "abort"     # No unwind, reduces binary size and runtime overhead.
-strip = "symbols"   # Remove debug symbols.
+opt-level = 3     # Speed is preferred.
+lto = true        # Enable link-time-optimizations.
+panic = "abort"   # No unwind, reduces binary size and runtime overhead.
+strip = "symbols" # Generate debug symbols, but remove them afterwards.
 #trim-paths = "all"  # Remove potentially privileged information from the binaries
-#rustflags = ["-Cdebuginfo=0", "-Zthreads=8"] # Better compile performance

@@ -1,7 +1,9 @@
 [package]
 name = "client-service"
 version = "0.1.0"
-edition = "2024"
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
 
 [dependencies]
 thiserror = { workspace = true }
@@ -20,3 +22,6 @@ common = { path = "../common" }
 [features]
 default = []
 dev-env = ["dotenvy"]
+
+[lints]
+workspace = true

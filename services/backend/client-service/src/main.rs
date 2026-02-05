@@ -48,6 +48,5 @@ async fn main() -> eyre::Result<()> {
 
     let app_state = Arc::new(AppState { rabbitmq });
 
-
     Ok(())
 }

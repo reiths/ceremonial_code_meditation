@@ -2,8 +2,13 @@
 rustc-wrapper = "sccache" # caching compiler wrapper that speeds up rebuilds by caching previous compilation outputs.
 
 [target.aarch64-apple-darwin]
-# this is still unstable, even on nightly
-#rustflags = ["-C", "target-cpu=native"] # Optimize the binary for the host CPU, enabling all CPU-specific instructions.
+# The commented out flags are still unstable even on nightly.
+# The flags should probably also placed in [profile.dev/release] if possible.
+rustflags = [
+    # "-C", "target-cpu=native" # Optimize the binary for the host CPU, enabling all CPU-specific instructions.
+    # "-Zthreads=8", # Better compile performance.
+    # "-Cdebuginfo=0", # Don't generate debug info in the first place.
+]
 
 [alias]
 client-dev = "run -p client-service --features dev-env"
