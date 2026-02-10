@@ -12,3 +12,4 @@ rustflags = [
 
 [alias]
 client-dev = "run -p client-service --features dev-env"
+portfolio-dev = "run -p portfolio-service --features dev-env"

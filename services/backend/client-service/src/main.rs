@@ -1,4 +1,4 @@
-#![allow(unused)] // early dev
+#![expect(unused)] // early dev
 
 use std::sync::Arc;
 

@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["client-service", "common"]
+members = ["client-service", "common", "portfolio-service"]
 
 [workspace.package]
 edition = "2024"
@@ -8,24 +8,37 @@ rust-version = "1.93"
 publish = false
 
 [workspace.dependencies]
+# Error Handling
 thiserror = { version = "2" }
 eyre = { version = "0.6" }
+# Runtime
+tokio = { version = "1.48", features = ["full"] }
 axum = "0.8"
+tower = { version = "0.5.3" }                     # Middleware patterns: layers, timeouts, rate limits
+tower-http = { version = "0.6.8" }                # Serve static files, logging, request/response timeouts
+# Logging
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+# Serialization
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1.48", features = ["full"] }
+lapin = { version = "4.0.0" }                      # Protobuf
+# SQL
+sqlx = { version = "0.8.6" }       # Execute sql queries on the database
+sea-query = { version = "0.32.7" } # Build dynamic SQL queries safely
+modql = { version = "0.4.1" }      # Reusable CRUD functions
+# Environment variables
 dotenvy = { version = "0.15" }
-lapin = { version = "3.7" }
+# Others
+mongodb = { version = "3.5.1" }
 chrono = { version = "0.4" }
-mongodb = { version = "3.5" }
+once_cell = { version = "1.21.3" }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
 
 [profile.dev]
-opt-level = 0 # Prefer fast dev builds over speed.
+opt-level = 0      # Prefer fast dev builds over speed.
 incremental = true # Only recompile what changed, instead of the whole project.
 
 [profile.release]

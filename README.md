@@ -9,7 +9,7 @@ and gists to be applied somewhere else, and overall just ceremonial code meditat
 # Start all services
 docker-compose up -d
 
-# For development
+# Or just specific services
 docker-compose up -d client-db rabbitmq
 
 # View logs
@@ -24,3 +24,10 @@ docker-compose down -v
 
 > [!NOTE]  
 > All databases are stored in Docker volumes for persistence. Use `docker-compose down -v` for a complete cleanup including all data.
+
+In the `services/backend/<service>` folder, run
+```sh
+sqlx migrate add
+sqlx migrate run
+sqlx migrate revert
+```

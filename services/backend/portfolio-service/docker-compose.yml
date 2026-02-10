@@ -1,0 +1,45 @@
+services:
+  portfolio-service:
+    build:
+      context: ../../../
+      dockerfile: services/backend/portfolio-service/Dockerfile
+    image: portfolio-service:latest
+    container_name: portfolio-service
+    ports:
+      - "8002:8080"
+    environment:
+      - RUST_LOG=info,client_service=info
+    depends_on:
+      portfolio-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - portfolio-network
+      - shared-network
+    restart: unless-stopped
+
+  portfolio-db:
+    image: postgres:16-alpine
+    container_name: portfolio-db
+    env_file: ".env"
+    volumes:
+      - portfolio_db_data:/var/lib/postgresql/data
+      - ../../../db/init:/docker-entrypoint-initdb.d/:ro # map the whole init folder, everything is executed in order
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - portfolio-network
+    restart: unless-stopped
+
+networks:
+  portfolio-network:
+    driver: bridge
+
+volumes:
+  portfolio_db_data:

@@ -15,3 +15,5 @@ blank_lines_upper_bound = 2
 # Comments
 comment_width = 100
 format_code_in_doc_comments = true
+
+max_width = 120

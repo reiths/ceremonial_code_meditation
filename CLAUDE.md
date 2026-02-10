@@ -20,8 +20,25 @@ This file defines mandatory rules for AI agents working in this repository. Foll
 
 Never skip steps.
 
+## Correctness over convenience
+- Model the full error space—no shortcuts or simplified error handling.
+- Handle all edge cases, including race conditions, signal timing, and platform differences.
+- Use the type system to encode correctness constraints.
+- Prefer compile-time guarantees over runtime checks whenever possible.
+- Maintain consistency across platforms even when underlying OS capabilities differ.
+  Use OS-native logic rather than trying to emulate Unix on Windows (or vice versa).
+
+## Documentation
+- Use inline comments to explain "why," not just "what".
+- No narrative comments in function bodies. Only add a comment if what you're doing is non-obvious or special in some
+  way, or if something needs a deeper "why" explanation.
+- Module-level documentation should explain purpose and responsibilities.
+- Always use periods at the end of code comments.
+- Never use title case in headings and titles. Always use sentence case.
+
 ## Rust
-- Prefer Result over panic
+- Prefer Result over panic.
+- Use type system extensively: newtypes, builder patterns, type states, lifetimes.
 
 ## RabbitMQ
 - Verify message schema compatibility before changes
@@ -37,6 +54,7 @@ Never skip steps.
 - Test after every change
 - Run: `cargo llvm-cov --html` for coverage reports
 - Aim for 100% test coverage, use reports to find gaps
+- Test comprehensively, including edge cases, race conditions, and stress tests.
 
 ## Deployment
 - Ensure graceful shutdown (stop consuming, finish processing, close connections)

@@ -39,7 +39,7 @@ impl RabbitMQ {
 
         channel
             .exchange_declare(
-                EVENTS_EXCHANGE,
+                EVENTS_EXCHANGE.into(),
                 ExchangeKind::Topic,
                 ExchangeDeclareOptions {
                     durable: true,
@@ -57,11 +57,7 @@ impl RabbitMQ {
         Ok(())
     }
 
-    pub async fn declare_queue(
-        &self,
-        queue_name: &str,
-        routing_key: &str,
-    ) -> Result<(), lapin::Error> {
+    pub async fn declare_queue(&self, queue_name: &str, routing_key: &str) -> Result<(), lapin::Error> {
         let channel_guard = self.channel.read().await;
         let channel = channel_guard.as_ref().ok_or_else(|| {
             error!("Channel not initialized!");
@@ -70,7 +66,7 @@ impl RabbitMQ {
 
         channel
             .queue_declare(
-                queue_name,
+                queue_name.into(),
                 QueueDeclareOptions {
                     durable: true,
                     ..Default::default()
@@ -81,9 +77,9 @@ impl RabbitMQ {
 
         channel
             .queue_bind(
-                queue_name,
-                EVENTS_EXCHANGE,
-                routing_key,
+                queue_name.into(),
+                EVENTS_EXCHANGE.into(),
+                routing_key.into(),
                 QueueBindOptions::default(),
                 FieldTable::default(),
             )
@@ -103,8 +99,8 @@ impl RabbitMQ {
 
         channel
             .basic_publish(
-                EVENTS_EXCHANGE,
-                routing_key,
+                EVENTS_EXCHANGE.into(),
+                routing_key.into(),
                 BasicPublishOptions::default(),
                 message,
                 BasicProperties::default()
