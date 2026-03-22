@@ -1,8 +1,10 @@
-mod error;
-mod model;
+#![expect(unused)] // early dev
 
 use axum::Router;
-use sqlx::PgPool;
+
+pub mod context;
+mod error;
+mod model;
 
 
 #[derive(Clone)]

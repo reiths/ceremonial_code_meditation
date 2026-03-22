@@ -1,9 +1,9 @@
 use sqlx::PgPool;
 
 pub mod asset;
-mod base;
 mod error;
 mod store;
+pub mod transaction;
 
 
 /// Kinda like the application state

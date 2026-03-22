@@ -17,13 +17,20 @@ tokio = { workspace = true }
 dotenvy = { workspace = true, optional = true }
 mongodb = { workspace = true }
 sqlx = { workspace = true, features = [
-    "runtime-tokio",
     "postgres",
+    "runtime-tokio",
     "uuid",
-    "time",
+    "chrono",
+    "rust_decimal",
 ] }
-sea-query = { workspace = true }
-modql = { workspace = true }
+sea-query = { workspace = true, features = [
+    "backend-postgres",
+    "with-rust_decimal",
+    "with-uuid",
+    "with-chrono",
+] }
+sea-query-binder = { workspace = true }
+rust_decimal = { workspace = true }
 tower-http = { workspace = true }
 once_cell = { workspace = true }
 
